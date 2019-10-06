@@ -1,0 +1,2 @@
+class ModFileException(Exception):
+	pass
