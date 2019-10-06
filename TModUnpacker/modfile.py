@@ -15,7 +15,7 @@ class ModFile:
 		return int.from_bytes(stream.read(4), byteorder = "little")
 
 	def _save_file(self, file_name, file_buffer):
-
+		
 		# Create the directory
 		save_location = "{mod_name}_unpacked/{file_name}".format(mod_name = self.mod_name, file_name = file_name)
 		os.makedirs(os.path.dirname(save_location), exist_ok = True)
@@ -43,7 +43,7 @@ class ModFile:
 			self._save_file(file_name, deflated.read(file_size))
 
 	def _unpack_new(self, stream):
-
+		
 		# Mod name, mod version, mod files count
 		self.mod_name		= self._read_string(stream)
 		self.mod_version	= self._read_string(stream)
@@ -56,30 +56,29 @@ class ModFile:
 
 		for _ in range(self.mod_files):
 
-			name			= self._read_string(stream)
-			size			= self._read_int(stream)
+			name		= self._read_string(stream)
+			size		= self._read_int(stream)
 			compressed_size	= self._read_int(stream)
 
 			files[name] = {
-				"size"				: size,
+				"size"			: size,
 				"compressed_size"	: compressed_size,
 			}
 
 		for file_name, file_data in files.items():
 
-			size			= file_data["size"]
+			size		= file_data["size"]
 			compressed_size	= file_data["compressed_size"]
 				
 			# File is compressed
 			if size != compressed_size:
 				deflated = io.BytesIO(zlib.decompress(stream.read(compressed_size), -zlib.MAX_WBITS))
 				self._save_file(file_name, deflated.read())
-
 			else:
 				self._save_file(file_name, stream.read(size))
 
 	def unpack(self):
-
+		
 		with open(self.path, "rb") as mod_file:
 
 			if mod_file.read(4) != b"TMOD":
