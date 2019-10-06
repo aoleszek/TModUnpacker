@@ -1,6 +1,6 @@
 # TModUnpacker
 
-TModUnpacker is a tool used to unpack data from Terraria mod (**.tmod**) file. It is possible to extract data such as images, sounds, description or even the source code if it is included in the build. 
+TModUnpacker is a tool used to unpack data from Terraria mod (**.tmod**) file. It is possible to extract data such as images, sounds, description or even the source code if it is included in the build. It is compatible with old (<11) and new version.
 
 ## Usage
 
